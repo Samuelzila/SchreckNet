@@ -1,0 +1,25 @@
+body {
+	background: #000;
+	color: #0f0;
+	font-family: monospace;
+}
+
+a {
+	color: #0f0;
+}
+
+h1 {
+	color: #0f0;
+	border-bottom: 1px solid #0f0;
+}
+
+.post {
+	margin-bottom: 1em;
+}
+
+textarea,
+input {
+	background: #000;
+	color: #0f0;
+	border: 1px solid #0f0;
+}
