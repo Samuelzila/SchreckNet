@@ -37,13 +37,13 @@ function createTables()
 		FOREIGN KEY (author_id) REFERENCES users(id)
 	)");
 
-	// Create a default admin user if none exists
-	$stmt = $db->query("SELECT COUNT(*) FROM users WHERE role = 'admin'");
+	// Create a default storyteller user if none exists
+	$stmt = $db->query("SELECT COUNT(*) FROM users WHERE role = 'storyteller'");
 	$adminCount = $stmt->fetchColumn();
 	if ($adminCount == 0) {
 		$defaultAdminPassword = password_hash("changeme", PASSWORD_DEFAULT);
 		$stmt = $db->prepare("INSERT INTO users (username, password_hash, role) VALUES (?, ?, ?)");
-		$stmt->execute(["admin", $defaultAdminPassword, "admin"]);
+		$stmt->execute(["storyteller", $defaultAdminPassword, "storyteller"]);
 	}
 }
 

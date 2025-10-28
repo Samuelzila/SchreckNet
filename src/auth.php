@@ -38,7 +38,14 @@ function requireLogin()
 function isAdmin()
 {
 	$user = currentUser();
-	return $user && $user["role"] === "admin";
+	// The storyteller is always considered an admin.
+	return $user && ($user["role"] === "admin" || $user["role"] === "storyteller");
+}
+
+function isStoryteller()
+{
+	$user = currentUser();
+	return $user && $user["role"] === "storyteller";
 }
 
 function impersonate($userId)
