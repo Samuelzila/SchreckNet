@@ -57,3 +57,33 @@ function impersonate($userId)
 
 	if ($user) $_SESSION["user"] = $user;
 }
+
+function createUser($username, $password, $role = "player", $clan = null, $affiliation = null)
+{
+	$db = getDB();
+	$passwordHash = password_hash($password, PASSWORD_DEFAULT);
+	$clanAvatarPath = getClanAvatarPath($clan);
+	$stmt = $db->prepare("INSERT INTO users (username, password_hash, role, clan, affiliation, avatar) VALUES (?, ?, ?, ?, ?, ?)");
+	$stmt->execute([$username, $passwordHash, $role, $clan, $affiliation, $clanAvatarPath]);
+}
+function getClanAvatarPath($clan)
+{
+	echo "Getting avatar for clan: " . $clan . "\n";
+	$clanAvatars = [
+		'Banu Haqim' => 'SymbolClanBanuHaqimV5.webp',
+		'Brujah' => 'SymbolClanBrujahV5.webp',
+		'Gangrel' => 'SymbolClanGangrelV5.webp',
+		'Giovanni' => 'SymbolGiovanniV5Classic.webp',
+		'Lasombra' => 'LogoClanLasombraV5.webp',
+		'Malkavian' => 'SymbolClanMalkavianV5.png',
+		'Ministry' => 'SymbolMinistryV5.webp',
+		'Nosferatu' => 'SymbolClanNosferatuV5.webp',
+		'Ravnos' => 'SymbolClanRavnosV5.webp',
+		'Toreador' => 'SymbolClanToreadorV5.webp',
+		'Tremere' => 'SymbolClanTremereV5.webp',
+		'Tzimisce' => 'LogoClanTzimisce.webp',
+		'Ventrue' => 'SymbolClanVentrueV5.webp',
+	];
+
+	return "../public/assets/avatars/" . ($clanAvatars[$clan] ?? 'default.png');
+}

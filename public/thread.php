@@ -18,6 +18,9 @@ $posts = getPosts($threadId);
 	<?php foreach ($posts as $p): ?>
 		<div class="post">
 			<strong><?= htmlspecialchars($p['username']); ?></strong> (<?= $p['created_at']; ?>)
+			<div class="profile-pic">
+				<img src="<?= htmlspecialchars($p['avatar']); ?>" alt="Profile Picture" width="50" height="50">
+			</div>
 			<p><?= nl2br(htmlspecialchars($p['body'])); ?></p>
 		</div>
 		<hr>
