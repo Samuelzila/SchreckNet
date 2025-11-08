@@ -34,6 +34,14 @@ function getPosts($threadId)
 	return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function getAttachments($postId)
+{
+	$db = getDB();
+	$stmt = $db->prepare("SELECT * FROM attachments WHERE post_id = ?");
+	$stmt->execute([$postId]);
+	return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 function createThread($boardId, $authorId, $title, $body)
 {
 	$db = getDB();
@@ -51,4 +59,6 @@ function replyToThread($threadId, $authorId, $body)
 	$db = getDB();
 	$stmt = $db->prepare("INSERT INTO posts (thread_id, author_id, body, created_at) VALUES (?, ?, ?, datetime('now'))");
 	$stmt->execute([$threadId, $authorId, $body]);
+
+	return $db->lastInsertId();
 }

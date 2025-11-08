@@ -5,6 +5,12 @@ require_once __DIR__ . '/../config/config.php';
 if (!file_exists("../data")) {
 	mkdir("../data", 0770);
 }
+// Create uploads folder if it doesn't exist
+if (!file_exists("../public/uploads")) {
+	mkdir("../public/uploads", 0770);
+	mkdir("../public/uploads/images", 0770);
+	mkdir("../public/uploads/attachments", 0770);
+}
 
 // create tables if they doesn't exist
 $db = getDB();
@@ -40,6 +46,14 @@ $db->exec("CREATE TABLE IF NOT EXISTS posts (
 	FOREIGN KEY (thread_id) REFERENCES threads(id),
 	FOREIGN KEY (author_id) REFERENCES users(id)
 )");
+$db->exec("CREATE TABLE IF NOT EXISTS attachments (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	post_id INTEGER,
+	stored_as TEXT,
+	original_name TEXT,
+    	type TEXT,
+	FOREIGN KEY(post_id) REFERENCES posts(id))
+");
 
 // Create a default storyteller user if none exists
 $stmt = $db->query("SELECT COUNT(*) FROM users WHERE role = 'storyteller'");

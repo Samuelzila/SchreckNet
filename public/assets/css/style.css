@@ -51,3 +51,9 @@ input {
 	justify-content: space-between;
 
 }
+
+.post-image {
+	max-width: 400px;
+	border: 1px solid var(--color-primary);
+	margin-top: 4px;
+}
