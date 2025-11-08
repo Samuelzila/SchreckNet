@@ -4,7 +4,7 @@
 	<nav>
 		<a href="login.php">Home</a>
 		<?php if (isLoggedIn()): ?>
-			<a href="profile.php">Profile (<?= htmlspecialchars(currentUser()['username']); ?>)</a>
+			<a href="profile.php">Profile</a>
 			<?php if (isAdmin()): ?>
 				<a href="admin.php">Admin Panel</a>
 			<?php endif; ?>
