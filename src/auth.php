@@ -68,7 +68,6 @@ function createUser($username, $password, $role = "player", $clan = null, $affil
 }
 function getClanAvatarPath($clan)
 {
-	echo "Getting avatar for clan: " . $clan . "\n";
 	$clanAvatars = [
 		'Banu Haqim' => 'SymbolClanBanuHaqimV5.webp',
 		'Brujah' => 'SymbolClanBrujahV5.webp',

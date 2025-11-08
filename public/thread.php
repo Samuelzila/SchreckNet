@@ -14,12 +14,13 @@ $posts = getPosts($threadId);
 </head>
 
 <body>
+	<?php include 'header.php'; ?>
 	<h1><?= htmlspecialchars($posts[0]['title'] ?? 'Thread'); ?></h1>
 	<?php foreach ($posts as $p): ?>
 		<div class="post">
 			<strong><?= htmlspecialchars($p['username']); ?></strong> (<?= $p['created_at']; ?>)
-			<div class="profile-pic">
-				<img src="<?= htmlspecialchars($p['avatar']); ?>" alt="Profile Picture" width="50" height="50">
+			<div class="avatar-container">
+				<img class="avatar" src="<?= htmlspecialchars($p['avatar']); ?>" alt="Profile Picture">
 			</div>
 			<p><?= nl2br(htmlspecialchars($p['body'])); ?></p>
 		</div>

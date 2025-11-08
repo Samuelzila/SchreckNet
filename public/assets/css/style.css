@@ -1,16 +1,24 @@
+:root {
+	--color-primary: #af231c;
+	--color-secondary: #af231c;
+	--color-accent: #af231c;
+	--color-background: #000;
+	--color-text: #af231c;
+}
+
 body {
-	background: #000;
-	color: #0f0;
+	background: var(--color-background);
+	color: var(--color-text);
 	font-family: monospace;
 }
 
 a {
-	color: #0f0;
+	color: var(--color-primary);
 }
 
 h1 {
-	color: #0f0;
-	border-bottom: 1px solid #0f0;
+	color: var(--color-text);
+	border-bottom: 1px solid var(--color-primary);
 }
 
 .post {
@@ -19,7 +27,27 @@ h1 {
 
 textarea,
 input {
-	background: #000;
-	color: #0f0;
-	border: 1px solid #0f0;
+	background: var(--color-background);
+	color: var(--color-text);
+	border: 1px solid var(--color-primary);
+}
+
+.avatar-container {
+	display: flex;
+	width: 50px;
+	height: 50px;
+	align-items: center;
+	justify-content: center;
+}
+
+.avatar {
+	max-width: 50px;
+	max-height: 50px;
+}
+
+.header nav {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
 }

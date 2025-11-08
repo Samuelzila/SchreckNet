@@ -16,7 +16,7 @@ $boards = getBoards();
 </head>
 
 <body>
-	<h1><?php echo SITE_TITLE ?></h1>
+	<?php include 'header.php'; ?>
 	<ul>
 		<?php foreach ($boards as $b): ?>
 			<li><a href="board.php?id=<?= $b["id"] ?>">
