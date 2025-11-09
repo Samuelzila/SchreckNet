@@ -2,7 +2,7 @@
 <div class="header">
 	<h1><?= SITE_TITLE ?></h1>
 	<nav>
-		<a href="login.php">Home</a>
+		<a href="forum.php">Home</a>
 		<?php if (isLoggedIn()): ?>
 			<a href="profile.php">Profile</a>
 			<?php if (isAdmin()): ?>

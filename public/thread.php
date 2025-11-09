@@ -35,6 +35,17 @@ $posts = getPosts($threadId);
 					<a href="<?= $f["stored_as"] ?>" download><?= $f["original_name"] ?></a><br>
 				<?php endif; ?>
 			<?php } ?>
+			<?php if (isAdmin()): ?>
+				<form method="POST" action="edit_post.php" style="display:inline;">
+					<input type="hidden" name="post_id" value="<?= $p['id']; ?>">
+					<?php if (isAdmin()): ?>
+						<button name="action" value="delete">Delete</button>
+					<?php endif; ?>
+					<?php if (isStoryteller()): ?>
+						<button name="action" value="edit">Edit</button>
+					<?php endif; ?>
+				</form>
+			<?php endif; ?>
 		</div>
 		<hr>
 	<?php endforeach; ?>

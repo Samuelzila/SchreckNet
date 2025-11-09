@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$clan = $_POST['clan'] ?? '';
 	$affiliation = $_POST['affiliation'] ?? '';
 
-	$password = bin2hex(random_bytes(4)); // Generate a random 8-character password
+	$password = bin2hex(random_bytes(10));
 	createUser($username, $password, 'SPC', $clan, $affiliation);
 	echo "<p>Character '$username' created with password: <strong>$password</strong></p>";
 }
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Handle impersonation
 if (isset($_GET['impersonate'])) {
 	impersonate($_GET['impersonate']);
-	header("Location: posts.php");
+	header("Location: forum.php");
 	exit();
 }
 

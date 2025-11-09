@@ -41,7 +41,7 @@ $db->exec("CREATE TABLE IF NOT EXISTS posts (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	thread_id INTEGER NOT NULL,
 	author_id INTEGER NOT NULL,
-	body TEXT NOT NULL,
+	body TEXT,
 	created_at DATETIME NOT NULL,
 	FOREIGN KEY (thread_id) REFERENCES threads(id),
 	FOREIGN KEY (author_id) REFERENCES users(id)

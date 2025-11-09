@@ -20,6 +20,12 @@ $threads = getThreads($boardId);
 	<ul>
 		<?php foreach ($threads as $t): ?>
 			<li><a href="thread.php?id=<?php echo $t['id']; ?>"><?php echo htmlspecialchars($t['title']); ?></a> by <?php echo htmlspecialchars($t['username']); ?></li>
+			<?php if (isAdmin()): ?>
+				<form method="POST" action="delete_thread.php" style="display:inline;">
+					<input type="hidden" name="thread_id" value="<?php echo $t['id']; ?>">
+					<button type="submit">Delete</button>
+				</form>
+			<?php endif; ?>
 		<?php endforeach; ?>
 	</ul>
 	<a href="forum.php">Back to Boards</a>

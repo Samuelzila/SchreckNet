@@ -11,7 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$body = trim($_POST['body'] ?? '');
 	$author = currentUser();
 	if ($title && $boardId) {
-		createThread($boardId, $author["id"], $title, $body ?: null);
+		$threadId = createThread($boardId, $author["id"], $title, $body ?: null);
+		if (!empty($_FILES['attachment']['name'])) {
+			$postId = getPosts($threadId)[0]['id'];
+			addAttachment($postId, $_FILES['attachment']);
+		}
 		header("Location: ./board.php?id=" . urlencode($boardId));
 		exit;
 	} else {
@@ -36,11 +40,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		<p class="error"><?=
 					htmlspecialchars($error) ?></p>
 	<?php endif; ?>
-	<form method="POST">
+	<form method="POST" enctype="multipart/form-data">
 		<label for="title">Title:</label><br>
 		<input type="text" id="title" name="title" required><br><br>
 		<label for="body">Body</label><br>
 		<textarea id="content" name="body"></textarea><br><br>
+		<label for="attachment">Attach File:</label>
+		<input type="file" id="attachment" name="attachment"><br><br>
 		<input type="submit" value="Create Thread">
 	</form>
 	<p><a href="board.php?id=<?= htmlspecialchars(urlencode($boardId)) ?>">Back to Board</a></p>

@@ -52,6 +52,8 @@ function createThread($boardId, $authorId, $title, $body)
 	$stmt = $db->prepare("INSERT INTO posts (thread_id, author_id, body, created_at) VALUES (?, ?, ?, datetime('now'))");
 	$stmt->execute([$threadId, $authorId, $body]);
 	$db->commit();
+
+	return $threadId;
 }
 
 function replyToThread($threadId, $authorId, $body)
@@ -61,4 +63,27 @@ function replyToThread($threadId, $authorId, $body)
 	$stmt->execute([$threadId, $authorId, $body]);
 
 	return $db->lastInsertId();
+}
+
+function addAttachment($postId, $file)
+{
+	$original = basename($file['name']);
+	$ext = strtolower(pathinfo($original, PATHINFO_EXTENSION));
+
+	if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'])) {
+		$folder = "uploads/images/";
+		$type = "image";
+	} else if (in_array($ext, ['pdf', 'txt', 'zip'])) {
+		$folder = "uploads/attachments/";
+		$type = "document";
+	} else {
+		exit;
+	}
+
+	$stored = $folder . uniqid() . '.' . $ext;
+	move_uploaded_file($file['tmp_name'], '../public/' . $stored);
+
+	$db = getDB();
+	$stmt = $db->prepare("INSERT INTO attachments (post_id, stored_as, original_name, type) VALUES (?,?,?,?)");
+	$stmt->execute([$postId, $stored, $original, $type]);
 }
