@@ -87,3 +87,12 @@ function addAttachment($postId, $file)
 	$stmt = $db->prepare("INSERT INTO attachments (post_id, stored_as, original_name, type) VALUES (?,?,?,?)");
 	$stmt->execute([$postId, $stored, $original, $type]);
 }
+
+function getThreadIdFromPostId($postId)
+{
+	$db = getDB();
+	$stmt = $db->prepare("SELECT thread_id FROM posts WHERE id = ?");
+	$stmt->execute([$postId]);
+	$result = $stmt->fetch(PDO::FETCH_ASSOC);
+	return $result ? $result['thread_id'] : null;
+}

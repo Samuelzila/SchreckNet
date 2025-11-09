@@ -36,7 +36,7 @@ $posts = getPosts($threadId);
 				<?php endif; ?>
 			<?php } ?>
 			<?php if (isAdmin()): ?>
-				<form method="POST" action="edit_post.php" style="display:inline;">
+				<form method="POST" action="moderate_post.php" style="display:inline;">
 					<input type="hidden" name="post_id" value="<?= $p['id']; ?>">
 					<?php if (isAdmin()): ?>
 						<button name="action" value="delete">Delete</button>
