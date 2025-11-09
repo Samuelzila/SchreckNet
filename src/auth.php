@@ -84,5 +84,5 @@ function getClanAvatarPath($clan)
 		'Ventrue' => 'SymbolClanVentrueV5.webp',
 	];
 
-	return "../public/assets/avatars/" . ($clanAvatars[$clan] ?? 'default.png');
+	return "assets/avatars/" . ($clanAvatars[$clan] ?? 'default.png');
 }
