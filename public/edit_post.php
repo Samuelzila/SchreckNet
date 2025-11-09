@@ -23,6 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$newBody = $_POST['body'];
 	$stmt = $db->prepare("UPDATE posts SET body = ? WHERE id = ?");
 	$stmt->execute([$newBody, $postId]);
+
+	if (!empty($_FILES['attachment']['name'])) {
+		addAttachment($postId, $_FILES['attachment']);
+	}
+
 	header('Location: thread.php?id=' . getThreadIdFromPostId($postId));
 	exit;
 }
@@ -39,8 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
 	<h1>Edit Post</h1>
-	<form method="POST" action="">
+	<form method="POST" action="" enctype="multipart/form-data">
 		<textarea name="body" rows="10" cols="80"><?php echo htmlspecialchars($post['body']); ?></textarea><br>
+		<label for="attachment">Add attachment:</label><br>
+		<input type="file" id="attachment" name="attachment"><br><br>
 		<button type="submit">Save Changes</button>
 	</form>
 	<a href="thread.php?id=<?= getThreadIdFromPostId($postId) ?>">Cancel</a>
