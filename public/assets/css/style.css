@@ -58,7 +58,14 @@ input {
 	margin-top: 4px;
 }
 
-/* Default desktop behavior stays the same */
+.signature {
+	border-top: 1px dashed var(--color-primary);
+	margin-top: 5px;
+	padding-top: 5px;
+	color: var(--color-text);
+	font-size: 0.9em;
+	opacity: 0.8;
+}
 
 /* Mobile adjustments */
 @media (max-width: 600px) {

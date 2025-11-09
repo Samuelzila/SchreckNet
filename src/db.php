@@ -21,7 +21,8 @@ $db->exec("CREATE TABLE IF NOT EXISTS users (
 	clan TEXT,
 	affiliation TEXT,
 	avatar TEXT DEFAULT '../public/assets/avatars/default.png',
-	role TEXT NOT NULL DEFAULT 'spc'
+	role TEXT NOT NULL DEFAULT 'spc',
+	signature TEXT DEFAULT ''
 )");
 $db->exec("CREATE TABLE IF NOT EXISTS boards (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -54,6 +55,14 @@ $db->exec("CREATE TABLE IF NOT EXISTS attachments (
     	type TEXT,
 	FOREIGN KEY(post_id) REFERENCES posts(id))
 ");
+$db->exec("
+	CREATE TABLE IF NOT EXISTS user_settings (
+	user_id INTEGER,
+	setting_name TEXT,
+	setting_value TEXT,
+	PRIMARY KEY (user_id, setting_name),
+	FOREIGN KEY (user_id) REFERENCES users(id)
+)");
 
 // Create a default storyteller user if none exists
 $stmt = $db->query("SELECT COUNT(*) FROM users WHERE role = 'storyteller'");

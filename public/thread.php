@@ -35,6 +35,14 @@ $posts = getPosts($threadId);
 					<a href="<?= $f["stored_as"] ?>" download><?= $f["original_name"] ?></a><br>
 				<?php endif; ?>
 			<?php } ?>
+
+			<?php if (!empty($p['signature'])): ?>
+				<hr>
+				<div class="signature">
+					<?= parseBBCode($p["signature"]) ?>
+				</div>
+			<?php endif; ?>
+
 			<?php if (isAdmin()): ?>
 				<form method="POST" action="moderate_post.php" style="display:inline;">
 					<input type="hidden" name="post_id" value="<?= $p['id']; ?>">
