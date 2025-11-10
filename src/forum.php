@@ -29,7 +29,7 @@ function getThreads($boardId)
 function getPosts($threadId)
 {
 	$db = getDB();
-	$stmt = $db->prepare("SELECT p.*, u.username, u.avatar, u.signature FROM posts p JOIN users u ON u.id = p.author_id WHERE p.thread_id = ? ORDER BY p.created_at ASC");
+	$stmt = $db->prepare("SELECT p.*, u.username FROM posts p JOIN users u ON u.id = p.author_id WHERE p.thread_id = ? ORDER BY p.created_at ASC");
 	$stmt->execute([$threadId]);
 	return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -95,4 +95,12 @@ function getThreadIdFromPostId($postId)
 	$stmt->execute([$postId]);
 	$result = $stmt->fetch(PDO::FETCH_ASSOC);
 	return $result ? $result['thread_id'] : null;
+}
+
+function getUserFromPostId($postId)
+{
+	$db = getDB();
+	$stmt = $db->prepare("SELECT * FROM users WHERE id = (SELECT author_id FROM posts WHERE id = ?)");
+	$stmt->execute([$postId]);
+	return $stmt->fetch(PDO::FETCH_ASSOC);
 }

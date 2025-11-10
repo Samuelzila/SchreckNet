@@ -20,40 +20,51 @@ $posts = getPosts($threadId);
 	<h1><?= htmlspecialchars($posts[0]['title'] ?? 'Thread'); ?></h1>
 	<?php foreach ($posts as $p): ?>
 		<div class="post">
-			<strong><?= htmlspecialchars($p['username']); ?></strong> (<?= $p['created_at']; ?>)
-			<div class="avatar-container">
-				<img class="avatar" src="<?= htmlspecialchars($p['avatar']); ?>" alt="Profile Picture">
-			</div>
-			<p><?= parseBBCode($p["body"]) ?></p>
 			<?php
-			$attachments = getAttachments($p['id']);
-			foreach ($attachments as $f) {
-				if ($f["type"] == "image"):
+			$author = getUserFromPostId($p['id']);
 			?>
-					<img src="<?= $f["stored_as"] ?>" class="post-image" alt="Attachment"><br>
-				<?php else: ?>
-					<a href="<?= $f["stored_as"] ?>" download><?= $f["original_name"] ?></a><br>
-				<?php endif; ?>
-			<?php } ?>
-
-			<?php if (!empty($p['signature'])): ?>
-				<hr>
-				<div class="signature">
-					<?= parseBBCode($p["signature"]) ?>
+			<div class="profile-info">
+				<strong><?= htmlspecialchars($p['username']); ?></strong>
+				<div class="avatar-container">
+					<img class="avatar" src="<?= htmlspecialchars($author['avatar']); ?>" alt="Profile Picture">
 				</div>
-			<?php endif; ?>
+				<?php if ($author["role"] === "admin"): ?>
+					<p style="color:purple;"><strong>Administrator</strong></p>
+				<?php endif; ?>
+				<p><?= $author["clan"] ?></p>
+				<p><?= $author["affiliation"] ?></p>
+			</div>
+			<div class="post-content">
+				<p><?= parseBBCode($p["body"]) ?></p>
+				<?php
+				$attachments = getAttachments($p['id']);
+				foreach ($attachments as $f) {
+					if ($f["type"] == "image"):
+				?>
+						<img src="<?= $f["stored_as"] ?>" class="post-image" alt="Attachment"><br>
+					<?php else: ?>
+						<a href="<?= $f["stored_as"] ?>" download><?= $f["original_name"] ?></a><br>
+					<?php endif; ?>
+				<?php } ?>
 
-			<?php if (isAdmin()): ?>
-				<form method="POST" action="moderate_post.php" style="display:inline;">
-					<input type="hidden" name="post_id" value="<?= $p['id']; ?>">
-					<?php if (isAdmin()): ?>
-						<button name="action" value="delete">Delete</button>
-					<?php endif; ?>
-					<?php if (isStoryteller()): ?>
-						<button name="action" value="edit">Edit</button>
-					<?php endif; ?>
-				</form>
-			<?php endif; ?>
+				<?php if (!empty($author['signature'])): ?>
+					<div class="signature">
+						<?= parseBBCode($author["signature"]) ?>
+					</div>
+				<?php endif; ?>
+
+				<?php if (isAdmin()): ?>
+					<form method="POST" action="moderate_post.php" style="display:inline;">
+						<input type="hidden" name="post_id" value="<?= $p['id']; ?>">
+						<?php if (isAdmin()): ?>
+							<button name="action" value="delete">Delete</button>
+						<?php endif; ?>
+						<?php if (isStoryteller()): ?>
+							<button name="action" value="edit">Edit</button>
+						<?php endif; ?>
+					</form>
+				<?php endif; ?>
+			</div>
 		</div>
 		<hr>
 	<?php endforeach; ?>

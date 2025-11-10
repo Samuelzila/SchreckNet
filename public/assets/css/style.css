@@ -67,6 +67,26 @@ input {
 	opacity: 0.8;
 }
 
+.post {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+}
+
+.post .profile-info {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	text-align: center;
+	margin-right: 10px;
+	width: 100px;
+}
+
+.post .post-content {
+	flex: 1;
+}
+
 /* Mobile adjustments */
 @media (max-width: 600px) {
 
