@@ -1,9 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Lavishly+Yours&display=swap');
+
 :root {
 	--color-primary: #af231c;
 	--color-secondary: #af231c;
 	--color-accent: #af231c;
 	--color-background: #000;
 	--color-text: #af231c;
+}
+
+.primary-color-filter {
+	filter: brightness(0) saturate(100%) invert(14%) sepia(87%) saturate(3792%) hue-rotate(354deg) brightness(87%) contrast(87%);
 }
 
 body {
@@ -85,6 +91,13 @@ input {
 
 .post .post-content {
 	flex: 1;
+}
+
+.gothic-text {
+	font-family: "Lavishly Yours", cursive;
+	font-weight: 700;
+	font-style: normal;
+	font-size: 2.5em
 }
 
 /* Mobile adjustments */
